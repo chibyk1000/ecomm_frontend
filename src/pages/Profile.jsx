@@ -3,10 +3,10 @@ import { FilledInput, FormControl, InputLabel } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { HiMail } from "react-icons/hi";
-import axios from "axios";
+
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+
+import {  ToastContainer } from "react-toastify";
 import { useGetUserProfileQuery } from "../redux/userApi";
 const Profile = () => {
   const user = useGetUserProfileQuery();
