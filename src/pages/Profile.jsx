@@ -1,17 +1,18 @@
 import { MdVisibility } from "react-icons/md";
-import { FilledInput, FormControl, InputLabel } from "@mui/material";
-import React, { useState } from "react";
+import { Box, CircularProgress, FilledInput, FormControl, InputLabel } from "@mui/material";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { HiMail } from "react-icons/hi";
-
+import {UserContext} from '../App'
 import "react-toastify/dist/ReactToastify.css";
 
 import {  ToastContainer } from "react-toastify";
 import { useGetUserProfileQuery } from "../redux/userApi";
 const Profile = () => {
-  const user = useGetUserProfileQuery();
-  console.log(user.data);
-  const [firstname, setFirstname] = useState("");
+
+  const user = useContext(UserContext)
+ 
+  const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -20,6 +21,16 @@ const Profile = () => {
     try {
     } catch (err) {}
   };
+
+
+   if (!user) {
+     return (
+       <Box sx={{ display: "flex" }}>
+         <CircularProgress />
+       </Box>
+     );
+  }
+
   return (
     <div className="min-h-screen bg-slate-100 pt-10">
       <h2 className="text-center uppercase text-4xl mb-10  font-semibold">
@@ -34,7 +45,8 @@ const Profile = () => {
           <InputLabel htmlFor="filled-adornment-amount">First Name</InputLabel>
           <FilledInput
             id="filled-adornment-amount"
-            value={firstname}
+            
+            defaultValue={user.firstname}
             onChange={(event) => setFirstname(event.target.value)}
           />
         </FormControl>
@@ -42,7 +54,7 @@ const Profile = () => {
           <InputLabel htmlFor="filled-adornment-amount">Last Name</InputLabel>
           <FilledInput
             id="filled-adornment-amount"
-            value={lastname}
+            defaultValue={user.lastname}
             onChange={(event) => setLastname(event.target.value)}
           />
         </FormControl>
@@ -51,7 +63,7 @@ const Profile = () => {
           <FilledInput
             id="filled-adornment-amount"
             endAdornment={<HiMail size={25} color="grey" />}
-            value={email}
+            defaultValue={user.email}
             onChange={(event) => setEmail(event.target.value)}
           />
         </FormControl> 

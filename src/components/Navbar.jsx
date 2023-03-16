@@ -21,7 +21,7 @@ const Navbar = () => {
             <input
               type="search"
               placeholder="Search for products ..."
-              className="h-10 w-9/12 pl-2 placeholder:text-[.9rem]"
+              className="h-10 w-9/12 pl-2 placeholder:text-[.9rem] text-main"
             />
             <button type="submit" className="bg-main px-5 text-lg">
               <BiSearch />

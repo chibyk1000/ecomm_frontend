@@ -7,18 +7,24 @@ import axios from 'axios'
 import Verify from "./pages/Verify"
 
 import Profile from "./pages/Profile"
+import { useEffect, useState, createContext } from "react"
+export const UserContext = createContext()
+
+
 
 const App = () => {
   axios.defaults.withCredentials = true
-
-  // useEffect(() => {
-  //   axios.get('http://localhost:8080/user/profile')
-  //     .then(resp => {
-  //     console.log(resp)
-  //   })
-  // },[])
+const [data, setData] = useState(null)
+  useEffect(() => {
+    axios.get('http://localhost:8080/user/profile')
+      .then(resp => {
+    if(resp){
+      setData(resp.data)
+    }
+    })
+  },[])
   return (
-    <div>
+    <UserContext.Provider value={data}>
       <Routes>
         <Route path="/" element={
           <PageLayout>
@@ -35,7 +41,7 @@ const App = () => {
         } />
 
 </Routes>
-    </div>
+    </UserContext.Provider>
   )
 }
 
