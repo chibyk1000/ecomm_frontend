@@ -7,7 +7,7 @@ import {UserContext} from '../App'
 import "react-toastify/dist/ReactToastify.css";
 
 import {  ToastContainer } from "react-toastify";
-import { useGetUserProfileQuery } from "../redux/userApi";
+
 const Profile = () => {
 
   const user = useContext(UserContext)

@@ -1,9 +1,16 @@
-import React from 'react'
+
 import { Link, NavLink } from 'react-router-dom'
 import { BiSearch, BiCartAlt } from "react-icons/bi";
 import { Badge } from '@mui/material'
+import { useContext } from 'react';
+import { UserContext } from '../App'
+import { useSelector } from 'react-redux';
 const Navbar = () => {
-  return (
+  const user = useContext(UserContext)
+  
+  const cart = useSelector((state) => state.cartReducer)
+
+  return ( 
     <nav className="flex bg-gray-800 text-white py-4 justify-between px-5 items-center">
       <Link to="/">
         <img src="/logo.svg" alt="" />
@@ -28,12 +35,22 @@ const Navbar = () => {
             </button>
           </form>
         </li>
+   
         <li>
-          <NavLink to="/login" className="">Account</NavLink>
+          {user ? (
+            <NavLink to="/dashboard" className="">
+            Account
+            </NavLink>
+          ) : (
+            <NavLink to="/login" className="">
+              Login
+            </NavLink>
+          )}
         </li>
+
         <li>
           <Link to="/cart">
-            <Badge badgeContent={0} color="success">
+            <Badge badgeContent={Object.keys(cart).length>0 ?cart.item.length: '0'} color="success">
               <BiCartAlt />
             </Badge>
           </Link>
