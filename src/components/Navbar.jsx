@@ -1,16 +1,20 @@
 
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation, useParams,  } from 'react-router-dom'
 import { BiSearch, BiCartAlt } from "react-icons/bi";
 import { Badge } from '@mui/material'
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../App'
 import { useSelector } from 'react-redux';
-const Navbar = () => {
+const Navbar = ({open, setOpen}) => {
   const user = useContext(UserContext)
-  
+  const location = useLocation()
+  const params = useParams()
+
+  console.log(params);
+  // console.log(location.pathname === '/product/'+ /[]/);
   const cart = useSelector((state) => state.cartReducer)
 
-  return ( 
+  return (
     <nav className="flex bg-gray-800 text-white py-4 justify-between px-5 items-center">
       <Link to="/">
         <img src="/logo.svg" alt="" />
@@ -35,11 +39,11 @@ const Navbar = () => {
             </button>
           </form>
         </li>
-   
+
         <li>
           {user ? (
             <NavLink to="/dashboard" className="">
-            Account
+              Account
             </NavLink>
           ) : (
             <NavLink to="/login" className="">
@@ -49,11 +53,29 @@ const Navbar = () => {
         </li>
 
         <li>
-          <Link to="/cart">
-            <Badge badgeContent={Object.keys(cart).length>0 ?cart.item.length: '0'} color="success">
-              <BiCartAlt />
-            </Badge>
-          </Link>
+          {params.title ? (
+            <Link to="/cart">
+              <Badge
+                badgeContent={
+                  Object.keys(cart).length > 0 ? cart.item.length : "0"
+                }
+                color="success"
+              >
+                <BiCartAlt />
+              </Badge>
+            </Link>
+          ) : (
+            <button onClick={()=> setOpen(true)}>
+              <Badge
+                badgeContent={
+                  Object.keys(cart).length > 0 ? cart.item.length : "0"
+                }
+                color="success"
+              >
+                <BiCartAlt />
+              </Badge>
+            </button>
+          )}
         </li>
       </ul>
     </nav>

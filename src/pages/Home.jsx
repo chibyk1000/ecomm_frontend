@@ -14,7 +14,7 @@ const Home = () => {
         const resp = await axios.get(
           "http://localhost:8080/products/get-products"
         );
-        console.log(resp);
+  
         setData(resp.data);
       } catch (error) {
         console.log(error);
@@ -34,12 +34,12 @@ const Home = () => {
     }
   }
 
-  console.log(data);
+ 
   return (
     <div className="grid grid-cols-4 p-2 w-11/12 mx-auto gap-2">
       {data.map((product) => {
         return (
-          <div className="max-w-sm overflow-hidden rounded-xl bg-white shadow-md duration-200 hover:scale-100 hover:shadow-xl py-3">
+          <div className="max-w-sm overflow-hidden rounded-xl bg-white shadow-md duration-200 hover:scale-100 hover:shadow-xl py-3" key={product._id}>
             <Link to={`/product/${product.title }`}>
 
             <img src={product.image} alt="plant" className="h-auto w-full" />
